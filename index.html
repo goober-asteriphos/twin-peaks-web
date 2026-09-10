@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twin Peaks Entertainment | A Division of Starlight</title>
+    <meta name="description" content="Twin Peaks Entertainment is a division of Starlight, creating experiences on Roblox. Explore our work and connect with the Starlight community.">
+    <link rel="icon" type="image/png" href="TPE.png">
+    <style>
+        /* CSS Variables based on your logo palette - darker backgrounds for high contrast */
+        :root {
+            --bg-dark: #0A0618; /* Deep cosmic shadow */
+            --bg-base: #1B0D2D; /* Deep purple void */
+            --text-light: #E2D4F5;
+            --text-muted: #BCA9CD;
+            --accent-purple: #CEACEE;
+            --accent-glow: rgba(206, 172, 238, 0.4);
+            --card-bg: rgba(15, 10, 36, 0.6); /* Semi-transparent to let stars show through */
+            --border-light: rgba(206, 169, 245, 0.12);
+        }
+
+        body {
+            background-color: var(--bg-base); 
+            color: var(--text-light); 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            position: relative;
+        }
+
+        /* --- DYNAMIC STARFIELD SYSTEM --- */
+        .starfield, .starfield-slow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .starfield {
+            background-image: 
+                radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 50px 160px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 80px 240px, #E2D4F5, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 150px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 250px 100px, #CEACEE, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 300px 200px, #fff, rgba(0,0,0,0));
+            background-size: 550px 550px;
+            animation: starDrift 90s linear infinite;
+            opacity: 0.6;
+        }
+
+        .starfield-slow {
+            background-image: 
+                radial-gradient(1px 1px at 100px 50px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 200px 300px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 450px 150px, #E2D4F5, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 350px 450px, #fff, rgba(0,0,0,0));
+            background-size: 600px 600px;
+            animation: starDrift 180s linear infinite;
+            opacity: 0.4;
+        }
+
+        @keyframes starDrift {
+            from { background-position: 0 0; }
+            to { background-position: -550px 1100px; }
+        }
+
+        nav, header, section, footer {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 6, 24, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--accent-purple);
+            text-decoration: none;
+        }
+
+        .nav-logo img {
+            width: 40px;
+            border-radius: 50%;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-purple);
+        }
+
+        /* --- HERO SECTION --- */
+        header {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 60px;
+        }
+
+        .hero-logo {
+            width: 200px;
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 50px rgba(206, 172, 238, 0.25);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        h1 {
+            color: var(--accent-purple);
+            font-size: 3.5rem;
+            margin: 0 0 1rem 0;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(206, 172, 238, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        /* --- STATS --- */
+        .stats {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- SECTIONS & CARDS --- */
+        section {
+            padding: 100px 10%;
+        }
+
+        .alt-bg {
+            background-color: rgba(10, 6, 24, 0.7);
+            backdrop-filter: blur(4px);
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: var(--accent-purple);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-light);
+            padding: 30px;
+            border-radius: 15px;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            border-color: rgba(206, 172, 238, 0.5);
+        }
+
+        .card h3 {
+            color: var(--text-light);
+            margin-top: 0;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
+
+        /* --- FIXED INFINITE TEAM SCROLLER SYSTEM --- */
+        .scroller-container {
+            overflow: hidden;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 20px 0;
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        .scroller-track {
+            display: flex;
+            width: max-content;
+            gap: 30px;
+            transform: translate3d(0, 0, 0); 
+            animation: scrollHorizontal 45s linear infinite;
+        }
+
+        .scroller-track:hover {
+            animation-play-state: paused;
+        }
+
+        .team-card {
+            width: 280px;
+            flex-shrink: 0;
+            box-sizing: border-box;
+        }
+
+        @keyframes scrollHorizontal {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-25%, 0, 0); }
+        }
+
+        /* --- TEAM PROFILE PHOTOS --- */
+        .crew-img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px auto;
+            display: block;
+            border: 2px solid rgba(206, 169, 245, 0.3);
+            box-shadow: 0 0 15px rgba(206, 172, 238, 0.15);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover .crew-img {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* --- BUTTONS --- */
+        .btn-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-purple);
+            color: var(--bg-dark);
+            border: 2px solid var(--accent-purple);
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--accent-purple);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .btn-discord {
+            background-color: #5865F2;
+            color: white;
+            border: 2px solid #5865F2;
+        }
+        
+        .btn-discord:hover {
+            background-color: transparent;
+            color: #5865F2;
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--border-light);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 15px rgba(206, 172, 238, 0.2);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 80px 20px;
+            background-color: #05030B;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-light);
+        }
+
+        .footer-links a {
+            color: var(--accent-purple);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            nav { padding: 15px 20px; }
+            .nav-links { display: none; }
+            h1 { font-size: 2.5rem; }
+            .stats { flex-direction: column; gap: 20px; }
+        }
+    
+        /* Twin Peaks branding and responsive refinements. */
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 110px; }
+        .nav-logo { font-size: 1.1rem; line-height: 1.3; }
+        .nav-logo img { width: 52px; height: 52px; border-radius: 8px; }
+        .nav-logo small { display: block; color: var(--text-muted); font-size: .875rem; font-weight: 400; margin-top: 4px; }
+        .hero-logo { width: clamp(210px, 27vw, 320px); height: auto; border-radius: 12px; }
+        header { min-height: 100svh; background: radial-gradient(ellipse at 50% 30%, rgba(54, 25, 83, .65), transparent 65%); }
+        h1 { font-size: clamp(2.25rem, 5vw, 3.5rem); max-width: 1000px; line-height: 1.15; letter-spacing: -.025em; }
+        .division-label { color: var(--accent-purple); font-size: .875rem; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 1rem; }
+        .subtitle { margin-top: 0; }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+        a:focus-visible { outline: 3px solid var(--accent-purple); outline-offset: 5px; }
+        .scroller-track:focus-within { animation-play-state: paused; }
+        @media (max-width: 1000px) {
+            nav { padding: 12px 20px; gap: 14px; }
+            .nav-links a { margin-left: 16px; }
+        }
+        @media (max-width: 768px) {
+            nav { position: relative; flex-direction: column; }
+            .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+            .nav-links a { margin: 0; font-size: .875rem; }
+            header { min-height: auto; padding: 48px 20px 64px; }
+            .stats { flex-direction: row; gap: 24px; }
+            .stat-number { font-size: 1.4rem; }
+            section { padding: 64px 6%; }
+            h2 { font-size: 2rem; }
+            .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            .scroller-container { overflow-x: auto; mask-image: none; -webkit-mask-image: none; }
+        }
+    
+        #games { background-color: #191a19; background-image: linear-gradient(rgba(25, 26, 25, .78), rgba(25, 26, 25, .9)), url("rbanner.png"); background-size: cover; background-position: center; border-block: 1px solid rgba(157, 210, 212, .2); }
+        #games h2 { color: #9dd2d4; }
+        .scsa-feature { max-width: 800px; margin: 0 auto; text-align: center; }
+        .scsa-copy { padding: 12px 0; }
+        .scsa-label { color: #9dd2d4; font-size: .875rem; letter-spacing: .12em; text-transform: uppercase; }
+        .scsa-copy h3 { margin: 16px 0 24px; color: #b7e0e1; font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.12; }
+        .scsa-copy > p:not(.scsa-label) { color: #becbcb; line-height: 1.7; margin-bottom: 30px; }
+        .scsa-btn { background: #9dd2d4; border: 2px solid #9dd2d4; color: #191a19; }
+        .scsa-btn:hover { color: #b7e0e1; background: transparent; }
+    </style>
+</head>
+<body>
+
+    <div class="starfield"></div>
+    <div class="starfield-slow"></div>
+
+    <nav>
+        <a href="#" class="nav-logo">
+            <img src="TPE.png" alt="Twin Peaks Entertainment logo">
+            <span>Twin Peaks Entertainment<small>A division of Starlight</small></span>
+        </a>
+        <div class="nav-links">
+            <a href="#specialties">Our Focus</a>
+            <a href="#games">Games</a>
+            <a href="#team">Our Group</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <header>
+        <img src="TPE.png" alt="Twin Peaks Entertainment logo" class="hero-logo">
+        <p class="division-label">A division of Starlight</p>
+        <h1>Twin Peaks Entertainment</h1>
+        <p class="subtitle">Part of Starlight. Creating experiences on Roblox through imagination, thoughtful design, and a shared love of play.</p>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number">Roblox</span>
+                <span class="stat-label">Our Platform</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">Twin Peaks</span>
+                <span class="stat-label">Our Division</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">Starlight</span>
+                <span class="stat-label">Our Group</span>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <a href="https://discord.gg/e7sgNDwFu9" target="_blank" rel="noopener noreferrer" class="btn btn-discord">Join Starlight Discord</a>
+            <a href="https://www.roblox.com/share/g/1102247688" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Visit Starlight on Roblox</a>
+        </div>
+    </header>
+
+    <section id="specialties" class="alt-bg">
+        <h2>What We Deliver</h2>
+        <div class="grid-3">
+            <div class="card">
+                <h3>🪐 Game Development</h3>
+                <p>End-to-end Roblox game development from concept to launch. We handle systems engineering, UI/UX, 3D environments, and everything in between.</p>
+            </div>
+            <div class="card">
+                <h3>🚀 Live Operations</h3>
+                <p>Consistent monitoring, seasonal events, and massive content drops that keep our community engaged and coming back for more.</p>
+            </div>
+            <div class="card">
+                <h3>✨ Quality Assurance</h3>
+                <p>Every asset is polished, every system stress-tested, and every experience QA'd before it reaches a single player. We ship when it's ready.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="games" aria-labelledby="games-heading">
+        <h2 id="games-heading">Our Games</h2>
+        <article class="scsa-feature">
+            <div class="scsa-copy">
+                <p class="scsa-label">A Starlight game</p>
+                <h3>Starry Caverns State Asylum</h3>
+                <p>Starry Caverns State Asylum is a Starlight game that Twin Peaks Entertainment works on. Connect with the Starlight community on Discord.</p>
+                <a href="https://discord.gg/e7sgNDwFu9" target="_blank" rel="noopener noreferrer" class="btn scsa-btn">Join Starlight Discord</a>
+            </div>
+        </article>
+    </section>
+
+    <section id="team" class="alt-bg">
+        <h2>Meet the Starlight Team</h2>
+        <div class="scroller-container">
+            <div class="scroller-track" id="dynamic-scroller-track"></div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <h2>Ready to Collaborate?</h2>
+        <p style="margin-bottom: 30px; color: var(--text-muted);">For Twin Peaks Entertainment inquiries, partnerships, or recruitment, contact the Starlight group.</p>
+        <a href="mailto:nohello@asteriphos.com" class="btn btn-primary" style="margin-bottom: 30px;">nohello@asteriphos.com</a>
+        
+        <div style="margin-bottom: 40px;">
+            <a href="https://login.microsoftonline.com/asteriphos.com/oauth2/v2.0/authorize?client_id=4765445b-32c6-49b0-83e6-1d93765276ca&redirect_uri=https%3a%2f%2fwww.office.com%2flandingv2&response_type=code+id_token&scope=openid+profile+https%3a%2f%2fwww.office.com%2fv2%2fOfficeHome.All&response_mode=form_post&nonce=639147283086148098.NTMyNDc1YWQtM2QyNC00NjRlLWEyZGUtMjUyOTU5Mjg4MzZjNzllNTY2NDUtYzY3ZS00OTQ1LWI0YmQtMmIxMzUyYWE2ZmZh&ui_locales=en-US&mkt=en-US&client-request-id=d0c45860-906f-4bee-ba89-5277080f4284&state=1ikkuSHNNrOZt6l2Ef7kqHxjdxcKDvg3J8yBOB_J7yMHMMPMq6t5mXrFvFRqKgVG5WBTHshS9JXwmYAFuKxQig-0Tqb0bOg5n_k8hEdAHD28g6kNHJceOjtbLuaW4Z8VB12mRIVd3gVewXoxAoPQhZF0pixgP9EX1Ifi9woiUDR-uUOYcptdZEZJ_1YbjPApRoD-l_jqi5995nYaOeg6g8M9quBVIqh5OJNy1j82bEz_i6lBbRaLXy0q_d48RuZBwSkPjysb1Zrzv1C2NXFw2gq7kSWugmj0uleEFgpS11PrhlwnL02VJwc1ixO6cB6ivOFevXWVOjnwRtQEKwgVLVdzow0lUseWQSe92Q4WT-KN-cZDzBfiRhqOps29AwLDciuO7xi2Kix6hV9WRu2YjP5Yw3hjKe52tdOEpvJgdG-cw7o-SQA4SXqH_fyn1g1se1P6KGrdZ6zZdVp0y39z4_CykATQeQS_PCIeD-TvfChGWm27EF0u-86nj29cDx_4&x-client-SKU=ID_NET8_0&x-client-ver=8.14.0.0&allowbacktocommon=True" class="btn btn-secondary" style="padding: 10px 20px; font-size: 0.9rem;">Starlight Staff Sign In</a>
+        </div>
+        
+        <div class="footer-links">
+            <a href="https://discord.gg/d9zea9ts34" target="_blank" rel="noopener noreferrer">Starlight Discord</a> • 
+            <a href="https://www.roblox.com/share/g/1102247688" target="_blank" rel="noopener noreferrer">Starlight Roblox Group</a> •
+            <a href="mailto:nohello@asteriphos.com">Email Us</a>
+        </div>
+        <p style="margin-top: 40px; font-size: 0.8rem; opacity: 0.4;">&copy; 2026 Twin Peaks Entertainment. A division of Starlight. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // EDIT OR ADD YOUR CARDS IN THIS ARRAY ONLY
+        const teamData = [
+            {
+                name: "Ownership & Lead Developer",
+                role: "Goober AsteriPhos",
+                image: "1.png",
+                description: "Driving the creative vision and technical execution of Starlight's experiences."
+            },
+            {
+                name: "Ownership",
+                role: "AlexeiClif",
+                image: "2.png",
+                description: "Also driving the creative vision and technical execution of Starlight's experiences."
+            },
+            {
+                name: "Future Employee",
+                role: "TBD",
+                image: "3.png",
+                description: "This could be you in the future!"
+            },
+            {
+                name: "Future Employee",
+                role: "TBD",
+                image: "4.png",
+                description: "This could be you in the future!"
+            },
+            {
+                name: "Future Employee",
+                role: "TBD",
+                image: "5.png",
+                description: "This could be you in the future!"
+            }
+        ];
+
+        // This function automatically builds the scroller and clones it 4x for a seamless loop
+        function engineBuildScroller() {
+            const track = document.getElementById('dynamic-scroller-track');
+            if(!track) return;
+            
+            let trackHTML = '';
+            
+            // Loop 4 times to create the quad-cloned track automatically
+            for (let i = 0; i < 4; i++) {
+                teamData.forEach(member => {
+                    trackHTML += `
+                        <div class="card team-card">
+                            <img src="${member.image}" alt="${member.name}" class="crew-img">
+                            <h3>${member.role}</h3>
+                            <p style="color: var(--accent-purple); font-weight: bold; margin-bottom: 10px;">${member.name}</p>
+                            <p>${member.description}</p>
+                        </div>
+                    `;
+                });
+            }
+            
+            track.innerHTML = trackHTML;
+        }
+
+        // Initialize engine on page load
+        window.addEventListener('DOMContentLoaded', engineBuildScroller);
+    </script>
+
+</body>
+</html>
